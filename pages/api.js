@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'https://resume-corrector-sco3.onrender.com/'; // Замените на URL вашего FastAPI-сервера
+const API_BASE_URL = 'https://resume-corrector.onrender.com'; // Замените на URL вашего FastAPI-сервера
 
 const api = axios.create({
   baseURL: API_BASE_URL,
