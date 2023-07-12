@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: resume_frontend
+    runtime: docker
+    plan: free
+    repo: https://github.com/Ansar331/Frontend.git
+    region: frankfurt
+    branch: main
+    buildFilter:
+      paths:
+        - ./**
