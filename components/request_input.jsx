@@ -12,7 +12,7 @@ const RequestPage = () => {
 
   const fetchQueries = async () => {
     try {
-      const response = await axios.get(`https://resume-frontend-five.vercel.app/queries/${user_id}`);
+      const response = await axios.get(`https://resume-corrector.onrender.com/queries/${user_id}`);
       setQueries(response.data.queries);
     } catch (error) {
       console.error('Failed to fetch queries:', error);
@@ -33,7 +33,7 @@ const RequestPage = () => {
   
     // Отправляем запрос на сохранение запроса в базе данных
     try {
-      await axios.post('https://resume-frontend-five.vercel.app/queries', { user_id, query });
+      await axios.post('https://resume-corrector.onrender.com/queries', { user_id, query });
       console.log('Query saved successfully');
       setQuery('');
       fetchQueries();
