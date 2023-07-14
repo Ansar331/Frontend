@@ -8,7 +8,7 @@ const RequestPage = () => {
   const [queries, setQueries] = useState([]);
   const [load, setLoad] = useState(true);
 
-  const user_id = session?.user?.email || '';
+  const user_id = (session && session.user.email) ? session.user.email : "";
 
   const fetchQueries = async () => {
     try {
@@ -18,17 +18,20 @@ const RequestPage = () => {
       console.error('Failed to fetch queries:', error);
     }
   };
+  
 
   useEffect(() => {
-    if (user_id !== '' && load) {
+    if (user_id !== "" && load) {
       fetchQueries();
       setLoad(false);
     }
-  }, [user_id, load]);
+  }, [user_id, load]); // Добавлены зависимости user_id и load
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
+    // Отправляем запрос на сохранение запроса в базе данных
     try {
       await axios.post('https://resume-corrector.onrender.com/queries', { user_id, query });
       console.log('Query saved successfully');
@@ -38,6 +41,7 @@ const RequestPage = () => {
       console.error('Failed to save query:', error);
     }
   };
+  
 
   const handleChange = (e) => {
     setQuery(e.target.value);
@@ -45,21 +49,19 @@ const RequestPage = () => {
 
   if (session) {
     return (
-      <div className="w-full mx-auto mt-12 px-4 sm:px-8 md:px-12">
-        <h1 className="text-xl font-bold mb-2">Request History</h1>
-        <ul className="list-disc pl-6">
-          {queries.map((query, index) => (
-            <li key={index} className="text-gray-700">{query}</li>
-          ))}
-        </ul>
-      </div>
+      <div className="w-1/2 mx-auto mt-12">
+      <h1 className="text-xl font-bold mb-2">Request History</h1>
+      <ul className="list-disc pl-6">
+        {queries.map((query, index) => (
+          <li key={index} className="text-gray-700">{query}</li>
+        ))}
+      </ul>
+    </div>
     );
   } else {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <p className="text-2xl font-bold">Авторизуйтесь, пожалуйста.</p>
-      </div>
-    );
+    return (<div className="flex justify-center items-center h-screen">
+    <p className="text-2xl font-bold">Авторизуйтесь, пожалуйста.</p>
+  </div>)
   }
 };
 
