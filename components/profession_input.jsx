@@ -2,19 +2,6 @@ import { useState } from 'react';
 import { professionResume } from '/pages/api';
 import { useSession } from 'next-auth/react';
 
-const formatOutput = (message) => {
-  const urlRegex = /(https?:\/\/hh\.ru\/vacancy\/\d+)/g;
-  const urls = message.match(urlRegex) || [];
-
-  let formattedMessage = message;
-  urls.forEach((url) => {
-    const formattedUrl = url.replace(/"/g, "");
-    formattedMessage = formattedMessage.replace(url, `<a href="${formattedUrl}" class="text-blue-500 underline hover:text-blue-700">${formattedUrl}</a>`);
-  });
-
-  return `<span class="text-gray-500">${formattedMessage}</span>`;
-};
-
 const Profession = () => {
   const [data, setData] = useState('');
   const [output, setOutput] = useState('');
@@ -35,7 +22,7 @@ const Profession = () => {
       const resumeData = { data, user_id };
       const response = await professionResume(resumeData);
 
-      setOutput(formatOutput(response.message));
+      setOutput(response.message);
     } catch (error) {
       console.error(error);
     } finally {
@@ -75,7 +62,12 @@ const Profession = () => {
       {output && (
         <div className="mt-8">
           <h2 className="text-2xl font-bold mb-2">Список подходящих вам профессий</h2>
-          <div dangerouslySetInnerHTML={{ __html: output }} />
+          <div>
+            <div
+              dangerouslySetInnerHTML={{ __html: output }}
+              className="text-blue-500 underline hover:text-blue-700"
+            />
+          </div>
         </div>
       )}
     </div>
