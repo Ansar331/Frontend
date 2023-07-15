@@ -7,7 +7,7 @@ const Profession = () => {
   const [output, setOutput] = useState('');
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  const user_id = (session && session.user.email) ? session.user.email : "";
+  const user_id = session?.user?.email || '';
 
   const handleDataChange = (e) => {
     setData(e.target.value);
@@ -31,8 +31,8 @@ const Profession = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
-      <form onSubmit={handleSubmit} className="w-1/3 bg-white shadow-md rounded px-8 py-6" style={{ marginTop: '-300px' }}>
+    <div className="flex flex-col justify-center items-center min-h-screen">
+      <form onSubmit={handleSubmit} className="w-full max-w-lg bg-white shadow-md rounded px-8 py-6">
         <h2 className="text-2xl font-bold mb-6">Получить профессию под ваше резюме!</h2>
 
         <div className="mb-4">
@@ -52,7 +52,7 @@ const Profession = () => {
         <div className="flex items-center justify-between">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
           >
             {isLoading ? 'Печатает...' : 'Отправить'}
           </button>
@@ -60,7 +60,7 @@ const Profession = () => {
       </form>
 
       {output && (
-        <div className="mt-8">
+        <div className="mt-8 w-full max-w-lg">
           <h2 className="text-2xl font-bold mb-2">Список подходящих вам профессий</h2>
           <div>
             <div

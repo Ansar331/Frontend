@@ -9,7 +9,6 @@ const Analysis = () => {
   const [isLoading, setIsLoading] = useState(false); // Добавлено состояние загрузки
   const user_id = (session && session.user.email) ? session.user.email : "";
 
-
   const handleDataChange = (e) => {
     setData(e.target.value);
   };
@@ -35,8 +34,8 @@ const Analysis = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center h-screen">
-      <form onSubmit={handleSubmit} className="w-1/3 bg-white shadow-md rounded px-8 py-6" style={{ marginTop: '-300px' }}>
+    <div className="flex flex-col justify-center items-center min-h-screen">
+      <form onSubmit={handleSubmit} className="w-4/5 md:w-1/3 bg-white shadow-md rounded px-8 py-6" style={{ marginTop: '-300px' }}>
         <h2 className="text-2xl font-bold mb-6">Сделать анализ резюме!</h2>
 
         <div className="mb-4">
@@ -53,10 +52,10 @@ const Analysis = () => {
           />
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-center md:justify-between">
           <button
             type="submit"
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full md:w-auto"
           >
             {isLoading ? 'Печатает...' : 'Отправить'} {/* Изменено на "Печатает..." во время загрузки */}
           </button>
@@ -64,7 +63,7 @@ const Analysis = () => {
       </form>
 
       {output && (
-        <div className="mt-8">
+        <div className="mt-8 w-4/5 md:w-1/3">
           <h2 className="text-2xl font-bold mb-2">Результат</h2>
           <p>{output}</p>
         </div>
