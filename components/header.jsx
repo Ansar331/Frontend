@@ -40,11 +40,38 @@ function Header() {
               Resume Corrector
             </a>
             <button
-              className="border border-solid border-gray-600 px-3 py-1 rounded text-gray-600 opacity-50 hover:opacity-75 md:hidden"
+              className={`border border-solid border-gray-600 px-3 py-2 rounded text-gray-600 opacity-50 hover:opacity-75 md:hidden ${
+                isMobileMenuOpen ? 'bg-gray-200' : ''
+              }`}
               id="navbar-toggle"
               onClick={toggleMobileMenu}
             >
-              <i className="fas fa-bars"></i>
+              <svg
+                className={`h-5 w-5 ${isMobileMenuOpen ? 'hidden' : 'block'}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+              <svg
+                className={`h-5 w-5 ${isMobileMenuOpen ? 'block' : 'hidden'}`}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
             </button>
           </div>
 
