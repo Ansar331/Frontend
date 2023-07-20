@@ -1,27 +1,34 @@
+// analysis_input.jsx
+
 import { useState } from 'react';
 import { analyzeResume } from '/pages/api';
 import { useSession } from 'next-auth/react';
 
 const Analysis = () => {
-  const [data, setData] = useState('');
+  const [file, setFile] = useState(null);
   const [output, setOutput] = useState('');
   const { data: session } = useSession();
-  const [isLoading, setIsLoading] = useState(false); // Добавлено состояние загрузки
+  const [isLoading, setIsLoading] = useState(false);
   const user_id = (session && session.user.email) ? session.user.email : "";
 
-  const handleDataChange = (e) => {
-    setData(e.target.value);
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      setIsLoading(true); // Устанавливаем состояние загрузки в true
+      setIsLoading(true);
+
+      // Prepare the file data
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('user_id', user_id);
 
       // Send data to API for processing
-      const resumeData = { data, user_id };
-      const response = await analyzeResume(resumeData);
+      const response = await analyzeResume(formData);
 
       // Set the processed output
       setOutput(response.message);
@@ -29,7 +36,7 @@ const Analysis = () => {
       // Handle error
       console.error(error);
     } finally {
-      setIsLoading(false); // Устанавливаем состояние загрузки обратно в false
+      setIsLoading(false);
     }
   };
 
@@ -39,15 +46,13 @@ const Analysis = () => {
         <h2 className="text-2xl font-bold mb-6">Сделать анализ резюме!</h2>
 
         <div className="mb-4">
-          <label htmlFor="data" className="block text-gray-700 text-sm font-bold mb-2">
-            Вставьте сюда ваше резюме:
+          <label htmlFor="file" className="block text-gray-700 text-sm font-bold mb-2">
+            Загрузите ваше резюме:
           </label>
-          <textarea
-            id="data"
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Введите данные"
-            value={data}
-            onChange={handleDataChange}
+          <input
+            type="file"
+            id="file"
+            onChange={handleFileChange}
             required
           />
         </div>
@@ -57,7 +62,7 @@ const Analysis = () => {
             type="submit"
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full md:w-auto"
           >
-            {isLoading ? 'Печатает...' : 'Отправить'} {/* Изменено на "Печатает..." во время загрузки */}
+            {isLoading ? 'Печатает...' : 'Отправить'}
           </button>
         </div>
       </form>

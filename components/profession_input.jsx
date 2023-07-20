@@ -3,14 +3,16 @@ import { professionResume } from '/pages/api';
 import { useSession } from 'next-auth/react';
 
 const Profession = () => {
-  const [data, setData] = useState('');
+  const [data, setData] = useState(null); // Change initial state to null
   const [output, setOutput] = useState('');
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const user_id = session?.user?.email || '';
 
-  const handleDataChange = (e) => {
-    setData(e.target.value);
+  const handleFileChange = (e) => {
+    // Access the selected file from the input element
+    const selectedFile = e.target.files[0];
+    setData(selectedFile);
   };
 
   const handleSubmit = async (e) => {
@@ -19,8 +21,12 @@ const Profession = () => {
     try {
       setIsLoading(true);
 
-      const resumeData = { data, user_id };
-      const response = await professionResume(resumeData);
+      // Create a FormData object to send the file along with other data
+      const formData = new FormData();
+      formData.append('file', data);
+      formData.append('user_id', user_id);
+
+      const response = await professionResume(formData);
 
       setOutput(response.message);
     } catch (error) {
@@ -37,14 +43,13 @@ const Profession = () => {
 
         <div className="mb-4">
           <label htmlFor="data" className="block text-gray-700 text-sm font-bold mb-2">
-            Вставьте сюда ваше резюме:
+            Загрузите ваше резюме:
           </label>
-          <textarea
+          <input
+            type="file" // Change the input type to "file"
             id="data"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Введите данные"
-            value={data}
-            onChange={handleDataChange}
+            onChange={handleFileChange}
             required
           />
         </div>
