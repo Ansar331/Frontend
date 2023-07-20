@@ -52,6 +52,7 @@ const Analysis = () => {
           <input
             type="file"
             id="file"
+            accept=".pdf"
             onChange={handleFileChange}
             required
           />
