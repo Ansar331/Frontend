@@ -10,6 +10,7 @@ const Profession = () => {
   const user_id = session?.user?.email || '';
 
   const formRef = useRef(null);
+  const iframeRef = useRef(null);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -29,6 +30,11 @@ const Profession = () => {
       const response = await professionResume(formData);
 
       setOutput(response.message);
+
+      // Clear the file input after successful submission
+      if (data) {
+        setData(null);
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -45,6 +51,17 @@ const Profession = () => {
       formRef.current.style.height = `${formRef.current.scrollHeight}px`;
     }
   };
+
+  useEffect(() => {
+    // Update the iframe source when the data (uploaded file) changes
+    if (data && iframeRef.current) {
+      const fileReader = new FileReader();
+      fileReader.onload = function () {
+        iframeRef.current.src = fileReader.result;
+      };
+      fileReader.readAsDataURL(data);
+    }
+  }, [data]);
 
   return (
     <div className="flex flex-col justify-between items-center py-16">
@@ -78,6 +95,17 @@ const Profession = () => {
             </button>
           </div>
         </form>
+
+        {data && (
+          <iframe
+            ref={iframeRef}
+            title="Uploaded File"
+            className="mt-8"
+            width="100%"
+            height="700px"
+            frameBorder="0"
+          />
+        )}
 
         {output && (
           <div className="mt-8 w-full max-w-lg">
