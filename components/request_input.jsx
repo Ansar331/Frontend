@@ -14,34 +14,41 @@ const RequestPage = () => {
 
   const fetchQueries = async () => {
     try {
-      const response = await axios.get(`https://resume-corrector.onrender.com/queries/${user_id}`);
+      const response = await axios.get(`http://localhost:8000/queries/${user_id}`);
       setQueries(response.data.queries);
       setTotalPages(Math.ceil(response.data.queries.length / 5));
     } catch (error) {
       console.error('Failed to fetch queries:', error);
     }
   };
-  
 
   useEffect(() => {
     if (user_id !== "" && load) {
       fetchQueries();
       setLoad(false);
     }
-  }, [user_id, load]); // Добавлены зависимости user_id и load
-  
+  }, [user_id, load]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Отправляем запрос на сохранение запроса в базе данных
+
     try {
-      await axios.post('https://resume-corrector.onrender.com/queries', { user_id, query });
+      await axios.post('http://localhost:8000/queries', { user_id, query });
       console.log('Query saved successfully');
       setQuery('');
       fetchQueries();
     } catch (error) {
       console.error('Failed to save query:', error);
+    }
+  };
+
+  const handleDelete = async (queryToDelete) => {
+    try {
+      await axios.delete('http://localhost:8000/queries', { data: { user_id, query: queryToDelete } });
+      console.log('Query deleted successfully');
+      fetchQueries();
+    } catch (error) {
+      console.error('Failed to delete query:', error);
     }
   };
 
@@ -57,9 +64,19 @@ const RequestPage = () => {
     return (
       <div className="w-1/2 mx-auto mt-12">
         <h1 className="text-xl font-bold mb-2">Request History</h1>
+        <form onSubmit={handleSubmit} className="mb-4">
+        </form>
         <ul className="list-disc pl-6">
           {paginatedQueries.map((query, index) => (
-            <li key={index} className="text-gray-700">{query}</li>
+            <li key={index} className="text-gray-700">
+              {query}
+              <button
+                className="ml-4 text-red-500"
+                onClick={() => handleDelete(query)}
+              >
+                Delete
+              </button>
+            </li>
           ))}
         </ul>
         <div className="flex justify-center mt-4">
@@ -78,7 +95,7 @@ const RequestPage = () => {
   } else {
     return (
       <div className="flex justify-center items-center h-screen">
-        <p className="text-2xl font-bold">Авторизуйтесь, пожалуйста.</p>
+        <p className="text-2xl font-bold">Please log in.</p>
       </div>
     );
   }
