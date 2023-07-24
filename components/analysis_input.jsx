@@ -38,7 +38,7 @@ const Analysis = () => {
     }
   };
 
-  return (
+   return (
     <div className="relative min-h-screen overflow-hidden">
       {/* Form */}
       <form onSubmit={handleSubmit} className="mt-8 w-4/5 md:w-1/3 mx-auto bg-white shadow-md rounded px-8 py-6">
@@ -72,6 +72,20 @@ const Analysis = () => {
           <p>{output}</p>
         </div>
       )}
+
+      {/* Display the uploaded PDF in an iframe */}
+      {file && (
+        <div className="mt-8 w-4/5 md:w-1/3 mx-auto">
+          <h2 className="text-2xl font-bold mb-2">Загруженный PDF</h2>
+          <iframe
+            src={URL.createObjectURL(file)}
+            title="Uploaded PDF"
+            width="100%"
+            height="800px"
+          />
+        </div>
+      )}
+
       <style jsx>{`
         .min-h-screen {
           min-height: 50vh; /* Adjust the value as needed */
