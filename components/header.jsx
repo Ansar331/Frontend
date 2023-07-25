@@ -1,18 +1,11 @@
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
-
 
 function Header() {
   const { data: session } = useSession();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const router = useRouter();
-
-  const [activeLink, setActiveLink] = useState(''); // State to track the active link
-
 
   useEffect(() => {
-    setActiveLink(router.pathname);
     const handleResize = () => {
       if (window.innerWidth >= 768) {
         setMobileMenuOpen(false);
@@ -24,8 +17,7 @@ function Header() {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-    
-  }, [router.pathname]);
+  }, []);
 
   const handleLogout = () => {
     signOut();
@@ -83,54 +75,39 @@ function Header() {
             </button>
           </div>
 
-          <div className="hidden md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0" id="navbar-collapse">
+          <div
+            className={`${
+              isMobileMenuOpen ? '' : 'hidden'
+            } md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0`}
+            id="navbar-collapse"
+          >
             <a
               href="/"
-              className={`p-2 lg:px-4 md:mx-2 ${
-                activeLink === '/'
-                  ? 'text-white rounded bg-indigo-600'
-                  : 'text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300'
-              }`}
+              className="p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600"
             >
               Home
             </a>
             <a
               href="/improve"
-              className={`p-2 lg:px-4 md:mx-2 ${
-                activeLink === '/improve'
-                  ? 'text-white rounded bg-indigo-600'
-                  : 'text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300'
-              }`}
+              className="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
             >
               Improve
             </a>
             <a
               href="/analysis"
-              className={`p-2 lg:px-4 md:mx-2 ${
-                activeLink === '/analysis'
-                  ? 'text-white rounded bg-indigo-600'
-                  : 'text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300'
-              }`}
+              className="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
             >
               Analysis
             </a>
             <a
               href="/profession"
-              className={`p-2 lg:px-4 md:mx-2 ${
-                activeLink === '/profession'
-                  ? 'text-white rounded bg-indigo-600'
-                  : 'text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300'
-              }`}
+              className="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
             >
               Profession
             </a>
             <a
               href="/request_history"
-              className={`p-2 lg:px-4 md:mx-2 ${
-                activeLink === '/request_history'
-                  ? 'text-white rounded bg-indigo-600'
-                  : 'text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300'
-              }`}
+              className="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
             >
               Request History
             </a>
