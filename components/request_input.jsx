@@ -14,7 +14,7 @@ const RequestPage = () => {
 
   const fetchQueries = async () => {
     try {
-      const response = await axios.get(`https://resume-corrector.onrender.com/queries/${user_id}`);
+      const response = await axios.get(`http://localhost:8000/queries/${user_id}`);
       setQueries(response.data.queries);
       setTotalPages(Math.ceil(response.data.queries.length / 5));
     } catch (error) {
@@ -33,7 +33,7 @@ const RequestPage = () => {
     e.preventDefault();
 
     try {
-      await axios.post('https://resume-corrector.onrender.com/queries', { user_id, query });
+      await axios.post('http://localhost:8000/queries', { user_id, query });
       console.log('Query saved successfully');
       setQuery('');
       fetchQueries();
@@ -44,7 +44,7 @@ const RequestPage = () => {
 
   const handleDelete = async (queryToDelete) => {
     try {
-      await axios.delete('https://resume-corrector.onrender.com/queries', { data: { user_id, query: queryToDelete } });
+      await axios.delete('http://localhost:8000/queries', { data: { user_id, query: queryToDelete } });
       console.log('Query deleted successfully');
       fetchQueries();
     } catch (error) {
@@ -65,10 +65,11 @@ const RequestPage = () => {
       <div className="w-1/2 mx-auto mt-12">
         <h1 className="text-xl font-bold mb-2">Request History</h1>
         <form onSubmit={handleSubmit} className="mb-4">
+          {/* Your form elements here, if needed */}
         </form>
         <ul className="list-disc pl-6">
           {paginatedQueries.map((query, index) => (
-            <li key={index} className="text-gray-700">
+            <li key={index} className="text-gray-700 py-2 border-b">
               {query}
               <button
                 className="ml-4 text-red-500"
