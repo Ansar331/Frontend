@@ -96,7 +96,14 @@ const Profession = () => {
           </div>
         </form>
 
-        {data && (
+        {output && (
+          <div className="mt-8 w-full max-w-lg">
+            <h2 className="text-2xl font-bold mb-2">Список подходящих вам профессий</h2>
+            <div dangerouslySetInnerHTML={{ __html: output }} />
+          </div>
+        )}
+        
+        {(data || output) && (
           <iframe
             ref={iframeRef}
             title="Uploaded File"
@@ -104,17 +111,8 @@ const Profession = () => {
             width="100%"
             height="700px"
             frameBorder="0"
+            src={output ? iframeRef.current?.src : ''}
           />
-        )}
-
-        {output && (
-          <div className="mt-8 w-full max-w-lg">
-            <h2 className="text-2xl font-bold mb-2">Список подходящих вам профессий</h2>
-            <div
-              dangerouslySetInnerHTML={{ __html: output }}
-              className="text-blue-500 underline hover:text-blue-700"
-            />
-          </div>
         )}
       </div>
 
