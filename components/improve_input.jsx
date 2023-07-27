@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { improveResume } from '/pages/api';
 import { useSession } from 'next-auth/react';
 
@@ -32,6 +32,46 @@ const MyForm = () => {
       setIsLoading(false);
     }
   };
+
+  const outputRef = useRef(null);
+
+  const handleDownloadPDF = () => {
+    const outputText = outputRef.current.textContent;
+
+    const htmlContent = `
+      <html>
+        <head>
+          <title>Resume Output</title>
+        </head>
+        <body>
+          <pre>${outputText}</pre>
+        </body>
+      </html>
+    `;
+
+    const options = {
+      margin: 10,
+      filename: 'resume_output.pdf',
+      image: { type: 'jpeg', quality: 0.98 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+    };
+
+    // Generate the PDF
+    import('html2pdf.js').then(({ default: html2pdf }) => {
+      html2pdf().from(htmlContent).set(options).save();
+    });
+  };
+
+  useEffect(() => {
+    // Cleanup function to prevent potential memory leaks
+    return () => {
+      const downloadButton = document.getElementById('download-pdf-button');
+      if (downloadButton) {
+        downloadButton.removeEventListener('click', handleDownloadPDF);
+      }
+    };
+  }, []);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
@@ -68,15 +108,21 @@ const MyForm = () => {
       {output && (
         <div className="mt-8 w-4/5 md:w-1/3">
           <h2 className="text-2xl font-bold mb-2">Вывод данных</h2>
-          <p>{output}</p>
+          <p ref={outputRef}>{output}</p>
+          <button
+            id="download-pdf-button"
+            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full mt-4"
+            onClick={handleDownloadPDF}
+          >
+            Скачать PDF
+          </button>
         </div>
       )}
 
-      {/* Add an empty div to extend the page height */}
       <div className="flex-grow"></div>
       <style jsx>{`
         .min-h-screen {
-          min-height: 50vh; /* Adjust the value as needed */
+          min-height: 50vh;
         }
       `}</style>
     </div>
