@@ -5,6 +5,7 @@ import { useSession } from 'next-auth/react';
 const Profession = () => {
   const [data, setData] = useState(null);
   const [output, setOutput] = useState('');
+  const [links, setLinks] = useState('');
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
   const user_id = session?.user?.email || '';
@@ -28,13 +29,10 @@ const Profession = () => {
       formData.append('user_id', user_id);
 
       const response = await professionResume(formData);
-
+      
       setOutput(response.message);
-
+      setLinks(response.links);
       // Clear the file input after successful submission
-      if (data) {
-        setData(null);
-      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -100,6 +98,12 @@ const Profession = () => {
           <div className="mt-8 w-full max-w-lg">
             <h2 className="text-2xl font-bold mb-2">Список подходящих вам профессий</h2>
             <div dangerouslySetInnerHTML={{ __html: output }} />
+          </div>
+        )}
+        {links && (
+          <div className="mt-8 w-full max-w-lg">
+            <h2 className="text-2xl font-bold mb-2 text-blue-500">Ссылки на вакансии</h2>
+            <div dangerouslySetInnerHTML={{ __html: `<div style="color: blue; text-decoration: underline;">${links}</div>` }} />
           </div>
         )}
         
