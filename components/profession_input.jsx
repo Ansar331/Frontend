@@ -8,7 +8,7 @@ const Profession = () => {
   const [links, setLinks] = useState('');
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  const user_id = session?.user?.email || '';
+  const user_id = session?.user?.email || ' ';
 
   const formRef = useRef(null);
   const iframeRef = useRef(null);

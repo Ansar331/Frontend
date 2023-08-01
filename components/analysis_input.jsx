@@ -7,7 +7,7 @@ const Analysis = () => {
   const [output, setOutput] = useState('');
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState(false);
-  const user_id = (session && session.user.email) ? session.user.email : '';
+  const user_id = (session && session.user.email) ? session.user.email : ' ';
   const [sliderValue, setSliderValue] = useState(50);
 
   const handleFileChange = (e) => {

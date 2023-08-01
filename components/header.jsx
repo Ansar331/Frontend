@@ -1,9 +1,11 @@
 import { useSession, signIn, signOut } from 'next-auth/react';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 function Header() {
   const { data: session } = useSession();
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,6 +31,10 @@ function Header() {
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const isActiveLink = (href) => {
+    return router.pathname === href ? 'bg-indigo-600 text-white' : 'text-gray-600';
   };
 
   return (
@@ -83,31 +89,41 @@ function Header() {
           >
             <a
               href="/"
-              className="p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600"
+              className={`p-2 lg:px-4 md:mx-2 rounded ${
+                isActiveLink('/') // Check if the link is active
+              }`}
             >
               Home
             </a>
             <a
               href="/improve"
-              className="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+              className={`p-2 lg:px-4 md:mx-2 rounded ${
+                isActiveLink('/improve') // Check if the link is active
+              }`}
             >
               Improve
             </a>
             <a
               href="/analysis"
-              className="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+              className={`p-2 lg:px-4 md:mx-2 rounded ${
+                isActiveLink('/analysis') // Check if the link is active
+              }`}
             >
               Analysis
             </a>
             <a
               href="/profession"
-              className="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+              className={`p-2 lg:px-4 md:mx-2 rounded ${
+                isActiveLink('/profession') // Check if the link is active
+              }`}
             >
               Profession
             </a>
             <a
               href="/request_history"
-              className="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+              className={`p-2 lg:px-4 md:mx-2 rounded ${
+                isActiveLink('/request_history') // Check if the link is active
+              }`}
             >
               Request History
             </a>

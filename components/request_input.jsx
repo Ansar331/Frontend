@@ -63,19 +63,17 @@ const RequestPage = () => {
 
     return (
       <div className="w-1/2 mx-auto mt-12">
-        <h1 className="text-xl font-bold mb-2">Request History</h1>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"></link>
+        <h1 className="text-xl font-bold mb-2">История Запросов</h1>
         <form onSubmit={handleSubmit} className="mb-4">
           {/* Your form elements here, if needed */}
         </form>
         <ul className="list-disc pl-6">
           {paginatedQueries.map((query, index) => (
             <li key={index} className="text-gray-700 py-2 border-b">
-              {query}
-              <button
-                className="ml-4 text-red-500"
-                onClick={() => handleDelete(query)}
-              >
-                Delete
+              {query} <br></br>
+              <button type="button" className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={() => handleDelete(query)}>
+                <i className="fas fa-trash"></i> {/* Иконка корзины из Font Awesome */} Delete
               </button>
             </li>
           ))}
@@ -95,7 +93,7 @@ const RequestPage = () => {
     );
   } else {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex justify-center items-center h-80">
         <p className="text-2xl font-bold">Please log in.</p>
       </div>
     );
