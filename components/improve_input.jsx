@@ -1,16 +1,17 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { improveResume } from '/pages/api';
 import { useSession } from 'next-auth/react';
 
 const MyForm = () => {
-  const [file, setFile] = useState('');
+  const [file, setFile] = useState(null);
   const [output, setOutput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
-  const user_id = (session && session.user.email) ? session.user.email : "";
+  const user_id = (session && session.user.email) ? session.user.email : '';
 
   const handleFileChange = (e) => {
-    setFile(e.target.value);
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
   };
 
   const handleSubmit = async (e) => {
@@ -19,21 +20,19 @@ const MyForm = () => {
     try {
       setIsLoading(true);
 
-      // Send data to API for processing
-      const resumeData = { file, user_id };
-      const response = await improveResume(resumeData);
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('user_id', user_id);
 
-      // Set the processed output
+      const response = await improveResume(formData);
+
       setOutput(response.message);
     } catch (error) {
-      // Handle error
       console.error(error);
     } finally {
       setIsLoading(false);
     }
   };
-
-  const outputRef = useRef(null);
 
   const handleDownloadPDF = () => {
     const outputText = outputRef.current.textContent;
@@ -57,21 +56,12 @@ const MyForm = () => {
       jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
     };
 
-    // Generate the PDF
     import('html2pdf.js').then(({ default: html2pdf }) => {
       html2pdf().from(htmlContent).set(options).save();
     });
   };
 
-  useEffect(() => {
-    // Cleanup function to prevent potential memory leaks
-    return () => {
-      const downloadButton = document.getElementById('download-pdf-button');
-      if (downloadButton) {
-        downloadButton.removeEventListener('click', handleDownloadPDF);
-      }
-    };
-  }, []);
+  const outputRef = useRef(null);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center">
@@ -83,13 +73,13 @@ const MyForm = () => {
 
         <div className="mb-4">
           <label htmlFor="file" className="block text-gray-700 text-sm font-bold mb-2">
-            Вставьте сюда ваше резюме:
+            Выберите PDF файл:
           </label>
-          <textarea
+          <input
+            type="file"
             id="file"
+            accept=".pdf"
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Введите данные"
-            value={file}
             onChange={handleFileChange}
             required
           />
