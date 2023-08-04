@@ -107,7 +107,7 @@ function Footer() {
                   clipRule="evenodd"
                 />
               </svg>
-              8 777 807 7070
+              Telegram: @Horatio835
             </p>
           </div>
         </div>
