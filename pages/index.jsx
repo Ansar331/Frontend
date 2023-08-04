@@ -1,4 +1,5 @@
 import Layout from '../components/layout';
+import { Analytics } from '@vercel/analytics/react';
 
 function Home() {
   const handlePageChange = () => {
@@ -7,6 +8,7 @@ function Home() {
 
   return (
     <Layout>
+      <Analytics />
       <div className="bg-indigo-100 py-6 md:py-12">
         <div className="container px-4 mx-auto">
 
