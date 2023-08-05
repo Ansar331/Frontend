@@ -7,7 +7,7 @@ const MyForm = () => {
   const [output, setOutput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { data: session } = useSession();
-  const user_id = (session && session.user.email) ? session.user.email : '';
+  const user_id = (session && session.user.email) ? session.user.email : ' ';
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
