@@ -43,7 +43,7 @@ function Header() {
         <div className="container px-4 mx-auto md:flex md:items-center">
           <div className="flex justify-between items-center">
             <a href="/" className="font-bold text-xl text-indigo-600">
-              Resume Corrector
+              Resume AI
             </a>
             <button
               className={`border border-solid border-gray-600 px-3 py-2 rounded text-gray-600 opacity-50 hover:opacity-75 md:hidden ${

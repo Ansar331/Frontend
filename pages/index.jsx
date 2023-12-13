@@ -21,25 +21,25 @@ function Home() {
             <div className="md:w-1/2 lg:w-1/4 md:px-4 xl:px-6 mt-8 md:mt-0 text-center">
               <span className="w-20 border-t-2 border-solid border-indigo-200 inline-block mb-3"></span>
               <h5 className="text-xl font-medium uppercase mb-4">Improve Resume</h5>
-              <p className="text-gray-600">"Improve Resume" принимает ваше резюме и желаемую должность и на основании этого возвращает улучшенное резюме, соответствующее вашей должности и требованиям компании.</p>
+              <p className="text-gray-600">"Improve Resume" takes your resume and the required position, and based on this, an improved resume is provided, describing your position and the requirements of the company.</p>
             </div>
 
             <div className="md:w-1/2 lg:w-1/4 md:px-4 xl:px-6 mt-8 md:mt-0 text-center">
               <span className="w-20 border-t-2 border-solid border-indigo-200 inline-block mb-3"></span>
               <h5 className="text-xl font-medium uppercase mb-4">Analysis Resume</h5>
-              <p className="text-gray-600">"Analysis Resume" принимает ваше резюме и проводит анализ, информируя вас о его качестве и предоставляя рекомендации и советы.</p>
+              <p className="text-gray-600">"Analysis Resume" accepts your resume and analyzes it, informing you about its quality and providing recommendations and advice.</p>
             </div>
 
             <div className="md:w-1/2 lg:w-1/4 md:px-4 xl:px-6 mt-8 md:mt-0 text-center">
               <span className="w-20 border-t-2 border-solid border-indigo-200 inline-block mb-3"></span>
               <h5 className="text-xl font-medium uppercase mb-4">Profession Resume</h5>
-              <p className="text-gray-600">"Profession Resume" - на этой странице вы можете получить список подходящих вам профессий на основе вашего резюме.</p>
+              <p className="text-gray-600">"Profession Resume" - on this page you can get a list of professions that suit you based on your resume.</p>
             </div>
 
             <div className="md:w-1/2 lg:w-1/4 md:px-4 xl:px-6 mt-8 md:mt-0 text-center">
               <span className="w-20 border-t-2 border-solid border-indigo-200 inline-block mb-3"></span>
               <h5 className="text-xl font-medium uppercase mb-4">Request History</h5>
-              <p className="text-gray-600">"Request History" - на этой странице вы можете увидеть все ваши предыдущие запросы, сделанные из вашей учетной записи.</p>
+              <p className="text-gray-600">"Request History" - on this page you can see all your previous requests made from your account.</p>
             </div>
           </div>
         </div>
