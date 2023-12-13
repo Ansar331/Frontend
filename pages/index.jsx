@@ -13,7 +13,7 @@ function Home() {
         <div className="container px-4 mx-auto">
 
           <div className="text-center max-w-2xl mx-auto">
-            <h1 className="text-3xl md:text-4xl font-medium mb-2">Здесь вы можете получить лучшее резюме!</h1>
+            <h1 className="text-3xl md:text-4xl font-medium mb-2">Here you can get the best resume!</h1>
             <button className="bg-indigo-600 text-white py-2 px-6 rounded-full text-xl mt-6" onClick={handlePageChange}>Get Started</button>
           </div>
 
